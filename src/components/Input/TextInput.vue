@@ -1,12 +1,19 @@
 <template>
   <div>
-    <label v-if="label" :for="id" class="block text-4 font-semibold !mb-1">
+    <label
+      v-if="label"
+      :for="id"
+      :htmlFor="htmlFor"
+      class="block text-4 font-semibold !mb-1"
+    >
       {{ label }}
     </label>
     <input
       :id="id"
       :type="type"
       :value="modelValue"
+      :name="name"
+      :v-model="name"
       @input="updateInput"
       class="border w-full p-1 outline-none rounded-md"
     />
@@ -32,6 +39,14 @@ export default {
     type: {
       type: String,
       default: "text",
+    },
+    name: {
+      type: String,
+      default: "",
+    },
+    htmlFor: {
+      type: String,
+      default: "",
     },
     methods: {
       updateInput(event) {

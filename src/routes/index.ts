@@ -1,6 +1,8 @@
 import { createRouter, createWebHistory } from "vue-router";
 import { HomePage, LoginPage, RegisterPage } from "@pages";
 
+const isLogin = false;
+
 const router = createRouter({
   history: createWebHistory(),
   routes: [
@@ -8,6 +10,9 @@ const router = createRouter({
       path: "/",
       name: "Home",
       component: HomePage,
+      meta: {
+        needsAuth: true,
+      },
     },
     {
       path: "/login",
@@ -20,6 +25,18 @@ const router = createRouter({
       component: RegisterPage,
     },
   ],
+});
+
+router.beforeEach((to, from, next) => {
+  if (to.meta.needsAuth) {
+    if (isLogin) {
+      next();
+    } else {
+      next("/login");
+    }
+  } else {
+    next();
+  }
 });
 
 export default router;

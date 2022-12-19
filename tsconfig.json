@@ -12,6 +12,8 @@
     "lib": ["ESNext", "DOM"],
     "skipLibCheck": true,
     "noEmit": true,
+    "noImplicitAny": false,
+    "allowJs": true,
     "baseUrl": ".",
     "paths": {
       "@assets/*": ["src/assets/*"],
