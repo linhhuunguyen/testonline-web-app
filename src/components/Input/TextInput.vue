@@ -3,7 +3,6 @@
     <label
       v-if="label"
       :for="id"
-      :htmlFor="htmlFor"
       class="block text-4 font-semibold !mb-1"
     >
       {{ label }}
@@ -13,7 +12,6 @@
       :type="type"
       :value="modelValue"
       :name="name"
-      :v-model="name"
       @input="updateInput"
       class="border w-full p-1 outline-none rounded-md"
     />
@@ -44,10 +42,7 @@ export default {
       type: String,
       default: "",
     },
-    htmlFor: {
-      type: String,
-      default: "",
-    },
+
     methods: {
       updateInput(event) {
         this.$emit("update:modelValue", event.target.value);
