@@ -6,41 +6,51 @@
       >
         <p class="pb-6 text-6 font-semibold">Login</p>
         <TextInput
-          htmlFor="email"
-          label="Email"
-          v-model="email"
+          id="email"
           name="email"
+          label="Email"
+          @input="email = $event.target.value"
           class="mb-3"
         />
+
         <TextInput
-          htmlFor="password"
+          id="password"
+          name="password"
           type="password"
           label="Password"
-          v-model="password"
-          name="password"
+          @input="password = $event.target.value"
           class="mb-4"
         />
-        <!-- <Button variant="primary" type="submit">Login</Button> -->
-        <button type="submit">link</button>
+        <Button variant="primary" type="submit">Login</Button>
       </div>
     </div>
   </form>
 </template>
 
 <script lang="ts">
+import cookies from "js-cookie";
+import { authenticateService } from "src/services/authenticate.services";
 import { TextInput, Button } from "../components";
+
 export default {
+  name: "LoginPage",
   components: { TextInput, Button },
   data() {
     return {
+      isLoading: false,
       email: "",
       password: "",
     };
   },
   methods: {
-    handleSubmit: (e) => {
-      const { email, password } = this;
-      console.log("login", e.target.value);
+    async handleSubmit(event: any) {
+      const bodyLogin = {
+        email: this.email,
+        password: this.password,
+      };
+      const data = await authenticateService.loginService(bodyLogin);
+      this.isLoading = false;
+      cookies.set("token", data.token);
     },
   },
 };
